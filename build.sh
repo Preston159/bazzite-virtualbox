@@ -17,3 +17,5 @@ rpm-ostree install libvirt
 rpm-ostree install qemu
 rpm-ostree install tigervnc-server
 rpm-ostree install virt-manager
+curl -L -o /tmp/vscode-x64.rpm 'https://code.visualstudio.com/sha/download?build=stable&os=linux-rpm-x64'
+rpm-ostree install /tmp/vscode-x64.rpm
