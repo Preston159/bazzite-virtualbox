@@ -36,7 +36,8 @@ ARG SOURCE_IMAGE="bazzite"
 ARG SOURCE_SUFFIX="-nvidia-open"
 
 ## SOURCE_TAG arg must be a version built for the specific image: eg, 39, 40, gts, latest
-ARG SOURCE_TAG="stable"
+#ARG SOURCE_TAG="stable"
+ARG SOURCE_TAG="40.20241020"
 
 
 ### 2. SOURCE IMAGE
