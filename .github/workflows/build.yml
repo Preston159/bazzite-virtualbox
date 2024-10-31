@@ -82,7 +82,7 @@ jobs:
             org.opencontainers.image.description=${{ env.MY_IMAGE_DESC }}
             org.opencontainers.image.title=${{ env.MY_IMAGE_NAME }}
           tags: |
-            type=raw,value={{date 'YYYYMMDD-hhmm' tz='America/Chicago'}},enable=true,priority=1000
+            type=raw,value={{date 'YYYYMMDD-HHmm' tz='America/Chicago'}},enable=true,priority=1000
 
       # Build image using Buildah action
       - name: Build Image
