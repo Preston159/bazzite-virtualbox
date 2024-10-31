@@ -1,5 +1,5 @@
 ---
-name: build-ublue-custom
+name: build-bazzite-custom
 on:
   pull_request:
     branches:
