@@ -22,7 +22,6 @@ rpm-ostree install virt-manager
 # development
 curl -L -o /tmp/vscode-x64.rpm 'https://code.visualstudio.com/sha/download?build=stable&os=linux-rpm-x64'
 rpm-ostree install /tmp/vscode-x64.rpm
+rpm-ostree install docker-cli
 # cli
 rpm-ostree install zsh
-curl -L -o /tmp/browsh.rpm https://github.com/browsh-org/browsh/releases/download/v1.8.0/browsh_1.8.0_linux_amd64.rpm
-rpm-ostree install /tmp/browsh.rpm
