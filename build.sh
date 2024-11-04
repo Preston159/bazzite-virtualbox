@@ -25,3 +25,6 @@ rpm-ostree install /tmp/vscode-x64.rpm
 rpm-ostree install docker-cli
 # cli
 rpm-ostree install zsh
+# proton
+curl -L -o /tmp/protonmail-bridge-3.14.0-1.x86_64.rpm 'https://proton.me/download/bridge/protonmail-bridge-3.14.0-1.x86_64.rpm'
+rpm-ostree install /tmp/protonmail-bridge-3.14.0-1.x86_64.rpm
