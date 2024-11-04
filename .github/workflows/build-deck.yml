@@ -1,5 +1,5 @@
 ---
-name: build-bazzite-custom-desktop
+name: build-bazzite-custom-deck
 on:
   pull_request:
     branches:
@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
 
 env:
-  MY_IMAGE_NAME: "${{ github.event.repository.name }}"  # the name of the image produced by this build, matches repo names
+  MY_IMAGE_NAME: "${{ github.event.repository.name }}-deck"  # the name of the image produced by this build, matches repo names
   MY_IMAGE_DESC: "A customized version of ublue-os/bazzite"
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
   OUT_TAG: latest
@@ -99,7 +99,7 @@ jobs:
         uses: redhat-actions/buildah-build@v2
         with:
           containerfiles: |
-            ./Containerfile-desktop
+            ./Containerfile-deck
           # Postfix image name with -custom to make it a little more descriptive
           # Syntax: https://docs.github.com/en/actions/learn-github-actions/expressions#format
           image: ${{ env.MY_IMAGE_NAME }}
