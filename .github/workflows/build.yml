@@ -12,6 +12,7 @@ on:
     paths-ignore:
       - '**/README.md'
       - '.github/workflows/build.yml'
+      - '.github/workflows/build-deck.yml'
       - 'Containerfile-deck'
   workflow_dispatch:
 
