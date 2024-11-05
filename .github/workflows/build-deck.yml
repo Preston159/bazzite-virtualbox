@@ -12,6 +12,7 @@ on:
     paths-ignore:
       - '**/README.md'
       - '.github/workflows/build.yml'
+      - 'Containerfile-desktop'
   workflow_dispatch:
 
 env:
