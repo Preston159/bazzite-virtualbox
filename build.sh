@@ -31,10 +31,13 @@ install_desktop edk2-ovmf
 install_desktop libvirt
 install_desktop qemu
 install_desktop virt-manager
-VIRTUALBOX_VER=$(curl -L https://download.virtualbox.org/virtualbox/LATEST.TXT)
-VIRTUALBOX_RPM=$(curl -L "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/" | grep -E 'VirtualBox.+?fedora40.+?\.rpm' | sed -E -e 's/[^<]+<a href="//' | sed -E -e 's/">.+//')
-curl -L -o "/tmp/$VIRTUALBOX_RPM" "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/$VIRTUALBOX_RPM"
-install_desktop "/tmp/$VIRTUALBOX_RPM"
+if [[ "$BUILD_VER" = "desktop" ]]; then
+  rpm-ostree install kernel-devel
+  VIRTUALBOX_VER=$(curl -L https://download.virtualbox.org/virtualbox/LATEST.TXT)
+  VIRTUALBOX_RPM=$(curl -L "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/" | grep -E 'VirtualBox.+?fedora40.+?\.rpm' | sed -E -e 's/[^<]+<a href="//' | sed -E -e 's/">.+//')
+  curl -L -o "/tmp/$VIRTUALBOX_RPM" "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/$VIRTUALBOX_RPM"
+  rpm-ostree install "/tmp/$VIRTUALBOX_RPM"
+fi
 # remote access
 #rpm-ostree install tigervnc-server # currently non-functional
 # development
