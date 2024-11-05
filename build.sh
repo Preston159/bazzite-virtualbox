@@ -46,6 +46,7 @@ if [[ "$BUILD_VER" = "desktop" ]]; then
   # get latest version of VirtualBox
   VIRTUALBOX_VER=$(curl -L https://download.virtualbox.org/virtualbox/LATEST.TXT)
   # get .rpm name for VirtualBox package
+  # FIXME: "fedora40" is hardcoded; this will break
   VIRTUALBOX_RPM=$(curl -L "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/" | grep -E 'VirtualBox.+?fedora40.+?\.rpm' | sed -E -e 's/[^<]+<a href="//' | sed -E -e 's/">.+//')
   # download VirtualBox rpm
   curl -L -o "/tmp/$VIRTUALBOX_RPM" "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/$VIRTUALBOX_RPM"
