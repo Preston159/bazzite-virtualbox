@@ -54,6 +54,8 @@ if [[ "$BUILD_VER" = "desktop" ]]; then
   # replace "uname -r" with hardcoded kernel version in VirtualBox scripts
   sed -i -e "s/uname -r/echo '$KERNEL_VER'/g" /usr/lib/virtualbox/vboxdrv.sh
   sed -i -e "s/uname -r/echo '$KERNEL_VER'/g" /usr/lib/virtualbox/check_module_dependencies.sh
+  # set kernel version in depmod calls
+  sed -i -e "s/depmod -a/depmod -v '$KERNEL_VER' -a/g" /usr/lib/virtualbox/vboxdrv.sh
   # run vboxconfig to build kernel modules
   KERN_VER="$KERNEL_VER" /sbin/vboxconfig
   # cat vbox log if it exists
