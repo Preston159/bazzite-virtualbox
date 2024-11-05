@@ -32,7 +32,13 @@ install_desktop libvirt
 install_desktop qemu
 install_desktop virt-manager
 if [[ "$BUILD_VER" = "desktop" ]]; then
-  rpm-ostree install kernel-devel
+  KERNEL_VER=$(uname -r)
+  KERNEL_DEVEL_RPM="kernel-devel-$KERNEL_VER.rpm"
+  KERNEL_DEVEL_MATCHED_RPM="kernel-devel-matched-$KERNEL_VER.rpm"
+  curl -L -o "/tmp/$KERNEL_DEVEL_RPM" "https://github.com/hhd-dev/kernel-bazzite/releases/download/$(echo $KERNEL_VER | cut -d'.' -f1,2,3)/$KERNEL_DEVEL_RPM"
+  curl -L -o "/tmp/$KERNEL_DEVEL_MATCHED_RPM" "https://github.com/hhd-dev/kernel-bazzite/releases/download/$(echo $KERNEL_VER | cut -d'.' -f1,2,3)/$KERNEL_DEVEL_MATCHED_RPM"
+  rpm-ostree install "/tmp/$KERNEL_DEVEL_RPM"
+  rpm-ostree install "/tmp/$KERNEL_DEVEL_MATCHED_RPM"
   rpm-ostree install dkms
   VIRTUALBOX_VER=$(curl -L https://download.virtualbox.org/virtualbox/LATEST.TXT)
   VIRTUALBOX_RPM=$(curl -L "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/" | grep -E 'VirtualBox.+?fedora40.+?\.rpm' | sed -E -e 's/[^<]+<a href="//' | sed -E -e 's/">.+//')
