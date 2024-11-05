@@ -32,7 +32,7 @@ install_desktop libvirt
 install_desktop qemu
 install_desktop virt-manager
 if [[ "$BUILD_VER" = "desktop" ]]; then
-  KERNEL_VER=$(uname -r)
+  KERNEL_VER=$(/usr/libexec/rpm-ostree/wrapped/rpm -qa | grep -E 'kernel-[0-9].*?\.bazzite' | cut -d'-' -f2,3)
   KERNEL_DEVEL_RPM="kernel-devel-$KERNEL_VER.rpm"
   KERNEL_DEVEL_MATCHED_RPM="kernel-devel-matched-$KERNEL_VER.rpm"
   curl -L -o "/tmp/$KERNEL_DEVEL_RPM" "https://github.com/hhd-dev/kernel-bazzite/releases/download/$(echo $KERNEL_VER | cut -d'.' -f1,2,3)/$KERNEL_DEVEL_RPM"
