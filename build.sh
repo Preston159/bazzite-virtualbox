@@ -32,19 +32,33 @@ install_desktop libvirt
 install_desktop qemu
 install_desktop virt-manager
 if [[ "$BUILD_VER" = "desktop" ]]; then
+  # get kernel version using rpm; `uname -r` does not work in a container environment
   KERNEL_VER=$(/usr/libexec/rpm-ostree/wrapped/rpm -qa | grep -E 'kernel-[0-9].*?\.bazzite' | cut -d'-' -f2,3)
+  # .rpm name for kernel-devel
   KERNEL_DEVEL_RPM="kernel-devel-$KERNEL_VER.rpm"
+  # .rpm name for kernel-devel-matched
   KERNEL_DEVEL_MATCHED_RPM="kernel-devel-matched-$KERNEL_VER.rpm"
+  # download kernel-devel rpm
   curl -L -o "/tmp/$KERNEL_DEVEL_RPM" "https://github.com/hhd-dev/kernel-bazzite/releases/download/$(echo $KERNEL_VER | cut -d'.' -f1,2,3)/$KERNEL_DEVEL_RPM"
+  # download kernel-devel-matched rpm
   curl -L -o "/tmp/$KERNEL_DEVEL_MATCHED_RPM" "https://github.com/hhd-dev/kernel-bazzite/releases/download/$(echo $KERNEL_VER | cut -d'.' -f1,2,3)/$KERNEL_DEVEL_MATCHED_RPM"
+  # install kernel-devel and kernel-devel-matched
   rpm-ostree install "/tmp/$KERNEL_DEVEL_RPM"
   rpm-ostree install "/tmp/$KERNEL_DEVEL_MATCHED_RPM"
+  # install dkms
   rpm-ostree install dkms
+  # get latest version of VirtualBox
   VIRTUALBOX_VER=$(curl -L https://download.virtualbox.org/virtualbox/LATEST.TXT)
+  # get .rpm name for VirtualBox package
   VIRTUALBOX_RPM=$(curl -L "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/" | grep -E 'VirtualBox.+?fedora40.+?\.rpm' | sed -E -e 's/[^<]+<a href="//' | sed -E -e 's/">.+//')
+  # download VirtualBox rpm
   curl -L -o "/tmp/$VIRTUALBOX_RPM" "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/$VIRTUALBOX_RPM"
+  # install VirtualBox
   rpm-ostree install "/tmp/$VIRTUALBOX_RPM"
-  sed -i -e "s/KERN_VER=\`uname -r\`/KERN_VER='$KERNEL_VER'/" /usr/lib/virtualbox/vboxdrv.sh && /sbin/vboxconfig
+  # replace "KERN_VER=`uname -r`" with "KERN_VER='$KERNEL_VER'" in vboxdrv.sh
+  sed -i -e "s/KERN_VER=\`uname -r\`/KERN_VER='$KERNEL_VER'/" /usr/lib/virtualbox/vboxdrv.sh
+  # run vboxconfig to build kernel modules
+  /sbin/vboxconfig
 fi
 # remote access
 #rpm-ostree install tigervnc-server # currently non-functional
