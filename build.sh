@@ -43,7 +43,8 @@ if [[ "$BUILD_VER" = "desktop" ]]; then
   VIRTUALBOX_VER=$(curl -L https://download.virtualbox.org/virtualbox/LATEST.TXT)
   VIRTUALBOX_RPM=$(curl -L "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/" | grep -E 'VirtualBox.+?fedora40.+?\.rpm' | sed -E -e 's/[^<]+<a href="//' | sed -E -e 's/">.+//')
   curl -L -o "/tmp/$VIRTUALBOX_RPM" "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/$VIRTUALBOX_RPM"
-  KERNELDIR="/usr/lib/modules/$KERNEL_VER/build" rpm-ostree install "/tmp/$VIRTUALBOX_RPM"
+  rpm-ostree install "/tmp/$VIRTUALBOX_RPM"
+  sed -i -e "s/KERN_VER=\`uname -r\`/KERN_VER='$KERNEL_VER'/" /usr/lib/virtualbox/vboxdrv.sh && /sbin/vboxconfig
 fi
 # remote access
 #rpm-ostree install tigervnc-server # currently non-functional
