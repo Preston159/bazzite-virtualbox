@@ -59,7 +59,7 @@ if [[ "$BUILD_VER" = "desktop" ]]; then
   sed -i -e "s/uname -r/echo '$KERNEL_VER'/g" /usr/lib/virtualbox/vboxdrv.sh
   sed -i -e "s/uname -r/echo '$KERNEL_VER'/g" /usr/lib/virtualbox/check_module_dependencies.sh
   # run vboxconfig to build kernel modules
-  /sbin/vboxconfig
+  KERN_VER="$KERNEL_VERSION" /sbin/vboxconfig
   # cat vbox log if it exists
   if [[ -e /var/log/vbox-setup.log ]]; then
     cat /var/log/vbox-setup.log
