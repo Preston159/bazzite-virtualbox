@@ -55,8 +55,9 @@ if [[ "$BUILD_VER" = "desktop" ]]; then
   curl -L -o "/tmp/$VIRTUALBOX_RPM" "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/$VIRTUALBOX_RPM"
   # install VirtualBox
   rpm-ostree install "/tmp/$VIRTUALBOX_RPM"
-  # replace "KERN_VER=`uname -r`" with "KERN_VER='$KERNEL_VER'" in vboxdrv.sh
-  sed -i -e "s/KERN_VER=\`uname -r\`/KERN_VER='$KERNEL_VER'/" /usr/lib/virtualbox/vboxdrv.sh
+  # replace "KERN_VER=`uname -r`" with "KERN_VER='$KERNEL_VER'" in VirtualBox scripts
+  sed -i -e "s/uname -r/echo '$KERNEL_VER'/g" /usr/lib/virtualbox/vboxdrv.sh
+  sed -i -e "s/uname -r/echo '$KERNEL_VER'/g" /usr/lib/virtualbox/check_module_dependencies.sh
   # run vboxconfig to build kernel modules
   /sbin/vboxconfig
 fi
