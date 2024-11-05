@@ -60,6 +60,10 @@ if [[ "$BUILD_VER" = "desktop" ]]; then
   sed -i -e "s/uname -r/echo '$KERNEL_VER'/g" /usr/lib/virtualbox/check_module_dependencies.sh
   # run vboxconfig to build kernel modules
   /sbin/vboxconfig
+  # cat vbox log if it exists
+  if [[ -e /var/log/vbox-setup.log ]]; then
+    cat /var/log/vbox-setup.log
+  fi
 fi
 # remote access
 #rpm-ostree install tigervnc-server # currently non-functional
