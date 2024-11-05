@@ -27,10 +27,6 @@ install_desktop () {
 }
 
 # virtualization
-install_desktop edk2-ovmf
-install_desktop libvirt
-install_desktop qemu
-install_desktop virt-manager
 if [[ "$BUILD_VER" = "desktop" ]]; then
   # get kernel version using rpm; `uname -r` does not work in a container environment
   KERNEL_VER=$(/usr/libexec/rpm-ostree/wrapped/rpm -qa | grep -E 'kernel-[0-9].*?\.bazzite' | cut -d'-' -f2,3)
@@ -65,6 +61,10 @@ if [[ "$BUILD_VER" = "desktop" ]]; then
     cat /var/log/vbox-setup.log
   fi
 fi
+install_desktop edk2-ovmf
+install_desktop libvirt
+install_desktop qemu
+install_desktop virt-manager
 # remote access
 #rpm-ostree install tigervnc-server # currently non-functional
 # development
