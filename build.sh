@@ -69,11 +69,14 @@ install_desktop edk2-ovmf
 install_desktop libvirt
 install_desktop qemu
 install_desktop virt-manager
+
 # remote access
 #rpm-ostree install tigervnc-server # currently non-functional
+
 # development
 curl -L -o /tmp/vscode-x64.rpm 'https://code.visualstudio.com/sha/download?build=stable&os=linux-rpm-x64'
 install /tmp/vscode-x64.rpm
 install_desktop docker-cli
+
 # cli
 install zsh
