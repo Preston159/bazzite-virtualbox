@@ -109,7 +109,7 @@ jobs:
             ${{ steps.generate-tags.outputs.alias_tags }}
           labels: ${{ steps.meta.outputs.labels }}
           oci: false
-          build_args: |
+          build-args: |
             FLAVOR=${{ matrix.flavor }}
 
       # Workaround bug where capital letters in your GitHub username make it impossible to push to GHCR.
