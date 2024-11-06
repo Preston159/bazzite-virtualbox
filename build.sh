@@ -63,11 +63,17 @@ if [[ "$BUILD_VER" = "nvidia" ]]; then
   curl -L -o "/tmp/$VIRTUALBOX_RPM" "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/$VIRTUALBOX_RPM"
   # install VirtualBox
   rpm-ostree install "/tmp/$VIRTUALBOX_RPM"
-  # replace "uname -r" with hardcoded kernel version in VirtualBox scripts
-  sed -i -e "s/uname -r/echo '$KERNEL_VER'/g" /usr/lib/virtualbox/vboxdrv.sh
-  sed -i -e "s/uname -r/echo '$KERNEL_VER'/g" /usr/lib/virtualbox/check_module_dependencies.sh
-  # set kernel version in vboxdrv depmod calls
-  sed -i -e "s/depmod -a/depmod -v '$KERNEL_VER' -a/g" /usr/lib/virtualbox/vboxdrv.sh
+  # insert hardcoded kernel version in VirtualBox scripts where necessary to get kernel modules to build
+  vbox_hardcode_kv () {
+    local TARGET_FILE="$1"
+    # sed expression to replace "uname -r" with "echo '[kernel version]'"
+    local EXPR_UNAME_R="s/uname -r/echo '$KERNEL_VER'/g"
+    # sed expression to replace "depmod -a" with "depmod -v '[kernel version]' -a"
+    local EXPR_DEPMOD_A="s/depmod -a/depmod -v '$KERNEL_VER' -a/g"
+    sed -i -e "$EXPR_UNAME_R" -e "$EXPR_DEPMOD_A" "$TARGET_FILE"
+  }
+  vbox_hardcode_kv /usr/lib/virtualbox/vboxdrv.sh
+  vbox_hardcode_kv /usr/lib/virtualbox/check_module_dependencies.sh
   # run vboxconfig with KERN_VER set to build kernel modules
   KERN_VER="$KERNEL_VER" /sbin/vboxconfig
   # cat vbox log if it exists
