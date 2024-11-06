@@ -12,7 +12,6 @@ on:
     paths-ignore:
       - '**/README.md'
       - '.github/workflows/build.yml'
-      - 'Containerfile-deck'
   workflow_dispatch:
 
 env:
@@ -102,7 +101,7 @@ jobs:
         uses: redhat-actions/buildah-build@v2
         with:
           containerfiles: |
-            ./Containerfile-${{ matrix.flavor }}
+            ./Containerfile
           # Postfix image name with -custom to make it a little more descriptive
           # Syntax: https://docs.github.com/en/actions/learn-github-actions/expressions#format
           image: bazzite-${{ matrix.flavor }}
@@ -110,6 +109,8 @@ jobs:
             ${{ steps.generate-tags.outputs.alias_tags }}
           labels: ${{ steps.meta.outputs.labels }}
           oci: false
+          build_args: |
+            FLAVOR=${{ matrix.flavor }}
 
       # Workaround bug where capital letters in your GitHub username make it impossible to push to GHCR.
       # https://github.com/macbre/push-to-ghcr/issues/12

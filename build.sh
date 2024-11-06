@@ -21,13 +21,13 @@ install () {
 
 # installs a given package only on the desktop version
 install_desktop () {
-  if [[ "$BUILD_VER" = "desktop" ]]; then
+  if [[ "$BUILD_VER" = "nvidia" ]]; then
     rpm-ostree install "$1"
   fi
 }
 
 # virtualization
-if [[ "$BUILD_VER" = "desktop" ]]; then
+if [[ "$BUILD_VER" = "nvidia" ]]; then
   # get kernel version using rpm; `uname -r` does not work in a container environment
   KERNEL_VER=$(/usr/libexec/rpm-ostree/wrapped/rpm -qa | grep -E 'kernel-[0-9].*?\.bazzite' | cut -d'-' -f2,3)
   KERNEL_RELEASE_VER="$(echo $KERNEL_VER | cut -d'.' -f1,2,3)"

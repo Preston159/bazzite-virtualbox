@@ -1,6 +1,7 @@
 ARG SOURCE_IMAGE="bazzite"
 ARG SOURCE_SUFFIX="-nvidia-open"
 ARG SOURCE_TAG="stable"
+ARG FLAVOR="nvidia"
 
 FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 
@@ -8,8 +9,9 @@ COPY org.kde.konsole.desktop /usr/share/applications/org.kde.konsole.desktop
 
 COPY build.sh /tmp/build.sh
 
+ARG FLAVOR
 RUN mkdir -p /var/lib/alternatives && \
-    /tmp/build.sh "desktop" && \
+    /tmp/build.sh ${FLAVOR} && \
     ostree container commit
 ## NOTES:
 # - /var/lib/alternatives is required to prevent failure with some RPM installs
