@@ -30,14 +30,15 @@ install_desktop () {
 if [[ "$BUILD_VER" = "desktop" ]]; then
   # get kernel version using rpm; `uname -r` does not work in a container environment
   KERNEL_VER=$(/usr/libexec/rpm-ostree/wrapped/rpm -qa | grep -E 'kernel-[0-9].*?\.bazzite' | cut -d'-' -f2,3)
+  KERNEL_RELEASE_VER="$(echo $KERNEL_VER | cut -d'.' -f1,2,3)"
   # .rpm name for kernel-devel
   KERNEL_DEVEL_RPM="kernel-devel-$KERNEL_VER.rpm"
   # .rpm name for kernel-devel-matched
   KERNEL_DEVEL_MATCHED_RPM="kernel-devel-matched-$KERNEL_VER.rpm"
   # download kernel-devel rpm
-  curl -L -o "/tmp/$KERNEL_DEVEL_RPM" "https://github.com/hhd-dev/kernel-bazzite/releases/download/$(echo $KERNEL_VER | cut -d'.' -f1,2,3)/$KERNEL_DEVEL_RPM"
+  curl -L -o "/tmp/$KERNEL_DEVEL_RPM" "https://github.com/hhd-dev/kernel-bazzite/releases/download/$KERNEL_RELEASE_VER/$KERNEL_DEVEL_RPM"
   # download kernel-devel-matched rpm
-  curl -L -o "/tmp/$KERNEL_DEVEL_MATCHED_RPM" "https://github.com/hhd-dev/kernel-bazzite/releases/download/$(echo $KERNEL_VER | cut -d'.' -f1,2,3)/$KERNEL_DEVEL_MATCHED_RPM"
+  curl -L -o "/tmp/$KERNEL_DEVEL_MATCHED_RPM" "https://github.com/hhd-dev/kernel-bazzite/releases/download/$KERNEL_RELEASE_VER/$KERNEL_DEVEL_MATCHED_RPM"
   # install kernel-devel and kernel-devel-matched
   rpm-ostree install "/tmp/$KERNEL_DEVEL_RPM"
   rpm-ostree install "/tmp/$KERNEL_DEVEL_MATCHED_RPM"
@@ -55,9 +56,9 @@ if [[ "$BUILD_VER" = "desktop" ]]; then
   # replace "uname -r" with hardcoded kernel version in VirtualBox scripts
   sed -i -e "s/uname -r/echo '$KERNEL_VER'/g" /usr/lib/virtualbox/vboxdrv.sh
   sed -i -e "s/uname -r/echo '$KERNEL_VER'/g" /usr/lib/virtualbox/check_module_dependencies.sh
-  # set kernel version in depmod calls
+  # set kernel version in vboxdrv depmod calls
   sed -i -e "s/depmod -a/depmod -v '$KERNEL_VER' -a/g" /usr/lib/virtualbox/vboxdrv.sh
-  # run vboxconfig to build kernel modules
+  # run vboxconfig with KERN_VER set to build kernel modules
   KERN_VER="$KERNEL_VER" /sbin/vboxconfig
   # cat vbox log if it exists
   if [[ -e /var/log/vbox-setup.log ]]; then
