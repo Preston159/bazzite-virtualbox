@@ -87,6 +87,7 @@ install_desktop qemu
 install_desktop virt-manager
 
 # remote access
+install waypipe
 #rpm-ostree install tigervnc-server # currently non-functional
 
 # development

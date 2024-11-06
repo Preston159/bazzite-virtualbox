@@ -6,6 +6,7 @@ A customized version of [bazzite] built for Steam Deck and NVIDIA.
 
 - Visual Studio Code
 - zsh
+- waypipe
 
 ### Desktop Only
 
