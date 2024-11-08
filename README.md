@@ -1,16 +1,26 @@
 A customized version of [bazzite] built for Steam Deck and NVIDIA.
 
-## Added packages
+## bazzite-nvidia-virtualbox
 
-### Both Versions
+The bazzite-nvidia-virtualbox image is based on bazzite-nvidia-open and has
+only VirtualBox and its kernel drivers added.
+
+## bazzite-deck
+
+The Universal Blue bazzite-deck image with the addition of:
 
 - Visual Studio Code
-- zsh
 - waypipe
+- zsh
 
-### Desktop Only
+## bazzite-nvidia
 
-- VirtualBox, with kernel drivers
+The bazzite-nvidia image is based on bazzite-nvidia-open and contains
+VirtualBox and:
+
+- Visual Studio Code
+- waypipe
+- zsh
 - docker-cli
 - virt-manager
 - qemu
