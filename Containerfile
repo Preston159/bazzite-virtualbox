@@ -5,8 +5,6 @@ ARG FLAVOR="nvidia"
 
 FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 
-COPY org.kde.konsole.desktop /usr/share/applications/org.kde.konsole.desktop
-
 COPY build.sh /tmp/build.sh
 
 ARG FLAVOR
