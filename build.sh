@@ -14,12 +14,14 @@ BUILD_VER="$1"
 # List of rpmfusion packages can be found here:
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
-# installs a given package on all versions
+# installs a given package on non-vbox versions
 install () {
-  rpm-ostree install "$1"
+  if [[ "$BUILD_VER" != "nvidia-virtualbox" ]]; then
+    rpm-ostree install "$1"
+  fi
 }
 
-# installs a given package only on the desktop version
+# installs a given package only on the nvidia version
 install_desktop () {
   if [[ "$BUILD_VER" = "nvidia" ]]; then
     rpm-ostree install "$1"
@@ -27,7 +29,7 @@ install_desktop () {
 }
 
 # virtualization
-if [[ "$BUILD_VER" = "nvidia" ]]; then
+if [[ "$BUILD_VER" = "nvidia" ]] || [[ "$BUILD_VER" = "nvidia-virtualbox" ]]; then
   # get kernel version using rpm; `uname -r` does not work in a container environment
   KERNEL_VER=$(/usr/libexec/rpm-ostree/wrapped/rpm -qa | grep -E 'kernel-[0-9].*?\.bazzite' | cut -d'-' -f2,3)
   KERNEL_RELEASE_VER="$(echo $KERNEL_VER | cut -d'.' -f1,2,3)"

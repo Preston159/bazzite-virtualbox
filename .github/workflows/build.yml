@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        flavor: [nvidia, deck]
+        flavor: [nvidia, deck, nvidia-virtualbox]
 
     permissions:
       contents: read
@@ -36,7 +36,7 @@ jobs:
       - name: Get Upstream
         id: "get_upstream"
         run: |
-          if [[ "${{ matrix.flavor }}" = "nvidia" ]]; then
+          if [[ "${{ matrix.flavor }}" = "nvidia" ]] || [[ "${{ matrix.flavor }}" = "nvidia-virtualbox" ]]; then
             echo "suffix=-nvidia-open" >> $GITHUB_OUTPUT
           elif [[ "${{ matrix.flavor }}" = "deck" ]]; then
             echo "suffix=-deck" >> $GITHUB_OUTPUT
