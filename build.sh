@@ -25,11 +25,12 @@ VIRTUALBOX_VER="$(curl -L https://download.virtualbox.org/virtualbox/LATEST.TXT)
 VIRTUALBOX_VER_URL="https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/"
 # get Fedora versions for which packages are available, sort descending
 VIRTUALBOX_RPMS="$(curl -L "$VIRTUALBOX_VER_URL" | grep -E -o 'VirtualBox.+?fedora[0-9]+?-.+?\.x86_64\.rpm' | sed -E -e 's/">.*//' | sort -Vr)"
-for VIRTUALBOX_RPM in $VIRTUALBOX_RPMS; do
+for _VIRTUALBOX_RPM in $VIRTUALBOX_RPMS; do
   # extract the Fedora version from the file name
-  FEDORA_VERSION="$(echo $VIRTUALBOX_RPM | grep -E -o 'fedora[0-9]+' | grep -E -o '[0-9]+')"
+  FEDORA_VERSION="$(echo $_VIRTUALBOX_RPM | grep -E -o 'fedora[0-9]+' | grep -E -o '[0-9]+')"
   # if <= $RELEASE, break
   if [[ "$FEDORA_VERSION" -le "$RELEASE" ]]; then
+    VIRTUALBOX_RPM="$_VIRTUALBOX_RPM"
     break
   fi
 done
