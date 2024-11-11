@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flavor: [base, nvidia]
+        flavor: [base, nvidia, gnome, gnome-nvidia, deck, deck-gnome, ally, ally-gnome, asus, gnome-asus, asus-nvidia, gnome-asus-nvidia]
 
     permissions:
       contents: read
@@ -33,14 +33,15 @@ jobs:
       id-token: write
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Get Upstream
         id: "get_upstream"
-        run: |
-          if [[ "${{ matrix.flavor }}" = "nvidia" ]]; then
-            echo "suffix=-nvidia-open" >> $GITHUB_OUTPUT
-          elif [[ "${{ matrix.flavor }}" = "base" ]]; then
-            echo "suffix=" >> $GITHUB_OUTPUT
-          fi
+        shell: bash
+        env:
+          flavor: ${{ matrix.flavor }}
+        run: ./get-bazzite-suffix.sh
 
       - name: Get Tag
         id: "get_tag"
@@ -49,12 +50,8 @@ jobs:
           if [[ "${{ github.ref_name }}" = "main" ]]; then
             echo "out_tag=latest" >> $GITHUB_OUTPUT
           else
-            echo "out_tag=${{ github.ref_name }}"
+            echo "out_tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
           fi
-
-      # Checkout push-to-registry action GitHub repository
-      - name: Checkout Push to Registry action
-        uses: actions/checkout@v4
 
       # - name: Maximize build space
       #   uses: ublue-os/remove-unwanted-software@v7
