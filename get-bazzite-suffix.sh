@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [[ "${{ matrix.flavor }}" = "nvidia" ]]; then
+if [[ "$flavor" = "nvidia" ]]; then
   echo "suffix=-nvidia-open" >> $GITHUB_OUTPUT
-elif [[ "${{ matrix.flavor }}" = "base" ]]; then
+elif [[ "$flavor" = "base" ]]; then
   echo "suffix=" >> $GITHUB_OUTPUT
 fi
