@@ -1,10 +1,14 @@
 #!/bin/bash
 
+set -ouex pipefail
+
 case "$flavor" in
   "base")
-    echo "suffix=" >> $GITHUB_OUTPUT;;
+    SUFFIX="";;
   *nvidia)
-    echo "suffix=-$flavor-open" >> $GITHUB_OUTPUT;;
+    SUFFIX="-$flavor-open";;
   *)
-    echo "suffix=-$flavor" >> $GITHUB_OUTPUT;;
+    SUFFIX="-$flavor";;
 esac
+
+echo "suffix=$SUFFIX" >> $GITHUB_OUTPUT
