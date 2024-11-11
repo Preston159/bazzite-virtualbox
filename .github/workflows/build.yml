@@ -35,12 +35,8 @@ jobs:
     steps:
       - name: Get Upstream
         id: "get_upstream"
-        run: |
-          if [[ "${{ matrix.flavor }}" = "nvidia" ]]; then
-            echo "suffix=-nvidia-open" >> $GITHUB_OUTPUT
-          elif [[ "${{ matrix.flavor }}" = "base" ]]; then
-            echo "suffix=" >> $GITHUB_OUTPUT
-          fi
+        shell: bash
+        run: ./get-bazzite-suffix.sh
 
       - name: Get Tag
         id: "get_tag"
