@@ -39,13 +39,13 @@ jobs:
       - name: Get Upstream
         id: "get_upstream"
         shell: bash
+        env:
+          flavor: ${{ matrix.flavor }}
         run: ./get-bazzite-suffix.sh
 
       - name: Get Tag
         id: "get_tag"
         shell: bash
-        env:
-          flavor: ${{ matrix.flavor }}
         run: |
           if [[ "${{ github.ref_name }}" = "main" ]]; then
             echo "out_tag=latest" >> $GITHUB_OUTPUT
