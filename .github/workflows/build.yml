@@ -50,7 +50,7 @@ jobs:
           if [[ "${{ github.ref_name }}" = "main" ]]; then
             echo "out_tag=latest" >> $GITHUB_OUTPUT
           else
-            echo "out_tag=${{ github.ref_name }}"
+            echo "out_tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
           fi
 
       # - name: Maximize build space
