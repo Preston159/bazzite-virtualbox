@@ -1,7 +1,8 @@
 #!/bin/bash
 
-if [[ "$flavor" = "nvidia" ]]; then
-  echo "suffix=-nvidia-open" >> $GITHUB_OUTPUT
-elif [[ "$flavor" = "base" ]]; then
-  echo "suffix=" >> $GITHUB_OUTPUT
-fi
+case "$flavor" in
+  "base")
+    echo "suffix=" >> $GITHUB_OUTPUT;;
+  "nvidia")
+    echo "suffix=-nvidia-open" >> $GITHUB_OUTPUT;;
+esac
