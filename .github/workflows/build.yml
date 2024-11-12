@@ -33,6 +33,9 @@ jobs:
       id-token: write
 
     steps:
+      - name: Maximize build space
+        uses: ublue-os/remove-unwanted-software@v7
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -52,9 +55,6 @@ jobs:
           else
             echo "out_tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
           fi
-
-      # - name: Maximize build space
-      #   uses: ublue-os/remove-unwanted-software@v7
 
       - name: Generate tags
         id: generate-tags
@@ -109,7 +109,7 @@ jobs:
             org.opencontainers.image.description=${{ env.MY_IMAGE_DESC }}
             org.opencontainers.image.title=bazzite-${{ matrix.flavor }}
           tags: |
-            type=raw,value={{date 'YYYYMMDD-HHmm' tz='America/Chicago'}},enable=true,priority=1000
+            type=raw,value=${{ steps.get_upstream.outputs.upstream_ver }}-{{date 'YYYYMMDD-HHmm' tz='America/Chicago'}},enable=true,priority=1000
 
       # Build image using Buildah action
       - name: Build Image
@@ -126,8 +126,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           oci: false
           build-args: |
-            FLAVOR=${{ matrix.flavor }}
-            SOURCE_SUFFIX=${{ steps.get_upstream.outputs.suffix }}
+            UPSTREAM=${{ steps.get_upstream.outputs.upstream }}
 
       # Workaround bug where capital letters in your GitHub username make it impossible to push to GHCR.
       # https://github.com/macbre/push-to-ghcr/issues/12

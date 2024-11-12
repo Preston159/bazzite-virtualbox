@@ -1,13 +1,9 @@
-ARG SOURCE_IMAGE="bazzite"
-ARG SOURCE_SUFFIX="-nvidia-open"
-ARG SOURCE_TAG="stable"
-ARG FLAVOR="nvidia"
+ARG UPSTREAM="ghcr.io/ublue-os/bazzite:latest"
 
-FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
+FROM ${UPSTREAM}
 
 COPY build.sh /tmp/build.sh
 
-ARG FLAVOR
 RUN mkdir -p /var/lib/alternatives && \
     /tmp/build.sh && \
     ostree container commit

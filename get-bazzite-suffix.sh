@@ -11,4 +11,8 @@ case "$flavor" in
     SUFFIX="-$flavor";;
 esac
 
-echo "suffix=$SUFFIX" >> $GITHUB_OUTPUT
+UPSTREAM="ghcr.io/ublue-os/bazzite$SUFFIX:latest"
+echo "upstream=$UPSTREAM" >> $GITHUB_OUTPUT
+docker pull "$UPSTREAM"
+UPSTREAM_VER="$(docker inspect "$UPSTREAM" | jq -r '.[0].Config.Labels["org.opencontainers.image.version"]')"
+echo "upstream_ver=$UPSTREAM_VER" >> $GITHUB_OUTPUT
