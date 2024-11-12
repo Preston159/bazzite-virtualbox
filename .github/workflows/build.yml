@@ -33,6 +33,9 @@ jobs:
       id-token: write
 
     steps:
+      - name: Maximize build space
+        uses: ublue-os/remove-unwanted-software@v7
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -52,9 +55,6 @@ jobs:
           else
             echo "out_tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
           fi
-
-      # - name: Maximize build space
-      #   uses: ublue-os/remove-unwanted-software@v7
 
       - name: Generate tags
         id: generate-tags
