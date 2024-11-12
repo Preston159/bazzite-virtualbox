@@ -2,14 +2,24 @@
 
 Universal Blue's [bazzite] with VirtualBox and its kernel drivers preinstalled.
 
-To install, first install [bazzite], then run
-`rpm-ostree rebase ostree-image-signed:docker://ghcr.io/preston159/bazzite-[flavor]`.
+To install, first install [bazzite], then run:
+```bash
+rpm-ostree rebase ostree-image-signed:docker://ghcr.io/preston159/bazzite-virtualbox-[flavor]
+```
+
 The flavor should generally match the tag of the bazzite image you currently
-have installed (which can be checked by running `rpm-ostree status`), except
-`-open` should be removed for nvidia versions, as the non-`-open` nvidia
-versions of bazzite are not built in this repo at this time. If they are added
-in the future, a different suffix will be used such that `x-nvidia` versions
-are still based on `x-nvidia-open`.
+have installed (e.g. `bazzite-xyz` -> `bazzite-virtualbox-xyz`), with a few
+exceptions:
+- `bazzite` -> `bazzite-virtualbox-base`
+- `bazzite-xyz-nvidia-open` -> `bazzite-virtualbox-xyz-nvidia` (remove the `-open`)
+  - The non-`open` nvidia versions of bazzite are not currently built in this
+    repository. If they are added in the future, a different suffix will be
+    used such that `xyz-nvidia` versions are still based on `xyz-nvidia-open`.
+
+You can check which version of bazzite you currently have installed by running:
+```bash
+rpm-ostree status
+```
 
 
 [bazzite]: https://github.com/ublue-os/bazzite
