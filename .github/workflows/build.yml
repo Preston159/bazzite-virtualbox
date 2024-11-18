@@ -109,7 +109,7 @@ jobs:
             org.opencontainers.image.description=${{ env.MY_IMAGE_DESC }}
             org.opencontainers.image.title=bazzite-${{ matrix.flavor }}
           tags: |
-            type=raw,value=${{ steps.get_upstream.outputs.upstream_ver }}-{{date 'YYYYMMDD-HHmm' tz='America/Chicago'}},enable=true,priority=1000
+            type=raw,value=${{ steps.get_upstream.outputs.upstream_ver }}-{{date 'YYYYMMDD-HHmm'}},enable=true,priority=1000
 
       # Build image using Buildah action
       - name: Build Image
