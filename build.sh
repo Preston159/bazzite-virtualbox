@@ -63,3 +63,8 @@ KERN_VER="$KERNEL_VER" /sbin/vboxconfig
 if [[ -e /var/log/vbox-setup.log ]]; then
   cat /var/log/vbox-setup.log
 fi
+# extension pack URL
+EXTPACK_URL="$VIRTUALBOX_VER_URL/Oracle_VirtualBox_Extension_Pack-$VIRTUALBOX_VER.vbox-extpack"
+# download and install extension pack
+curl -L -o "/tmp/extpack.vbox-extpack" "$EXTPACK_URL"
+yes | vboxmanage extpack install "/tmp/extpack.vbox-extpack"
