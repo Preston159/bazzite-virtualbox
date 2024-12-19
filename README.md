@@ -1,6 +1,7 @@
 # bazzite-virtualbox
 
-Universal Blue's [bazzite] with VirtualBox and its kernel drivers preinstalled.
+Universal Blue's [bazzite] with VirtualBox, its kernel drivers, and the
+Extension Pack preinstalled.
 
 ## Installing
 
@@ -37,6 +38,12 @@ chmod +x /tmp/vbox.sh
 
 Note that this will currently only work for images based on [bazzite].
 
+## License Info
+
+By using this image, you are agreeing to the terms of the [Oracle VirtualBox
+Extension Pack Personal Use and Education License][puel].
+
 
 [bazzite]: https://github.com/ublue-os/bazzite
 [image template]: https://github.com/ublue-os/image-template
+[puel]: https://www.virtualbox.org/wiki/VirtualBox_PUEL
