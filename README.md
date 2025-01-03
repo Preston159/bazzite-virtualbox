@@ -40,8 +40,8 @@ Note that this will currently only work for images based on [bazzite].
 
 ## License Info
 
-By using this image, you are agreeing to the terms of the [Oracle VirtualBox
-Extension Pack Personal Use and Education License][puel].
+By using this image (excluding `-noext` flavors), you are agreeing to the terms
+of the [Oracle VirtualBox Extension Pack Personal Use and Education License][puel].
 
 
 [bazzite]: https://github.com/ublue-os/bazzite

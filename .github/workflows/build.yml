@@ -26,6 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         flavor: [base, nvidia, gnome, gnome-nvidia, deck, deck-gnome, ally, ally-gnome, asus, gnome-asus, asus-nvidia, gnome-asus-nvidia]
+        extpack: ['yes', 'no']
 
     permissions:
       contents: read
@@ -44,6 +45,7 @@ jobs:
         shell: bash
         env:
           flavor: ${{ matrix.flavor }}
+          extpack: ${{ matrix.extpack }}
         run: ./get-bazzite-suffix.sh
 
       - name: Get Tag
@@ -107,7 +109,7 @@ jobs:
           labels: |
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository }}/main/README.md
             org.opencontainers.image.description=${{ env.MY_IMAGE_DESC }}
-            org.opencontainers.image.title=bazzite-${{ matrix.flavor }}
+            org.opencontainers.image.title=bazzite-${{ matrix.flavor }}${{ steps.get_upstream.outputs.ext_suffix }}
           tags: |
             type=raw,value=${{ steps.get_upstream.outputs.upstream_ver }}-{{date 'YYYYMMDD-HHmm'}},enable=true,priority=1000
 
