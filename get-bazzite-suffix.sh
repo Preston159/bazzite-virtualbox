@@ -11,8 +11,18 @@ case "$flavor" in
     SUFFIX="-$flavor";;
 esac
 
+EXT_SUFFIX=''
+
+case "$extpack" in
+  "yes")
+    EXT_SUFFIX='-noext';;
+  *)
+    ;;
+esac
+
 UPSTREAM="ghcr.io/ublue-os/bazzite$SUFFIX:latest"
 echo "upstream=$UPSTREAM" >> $GITHUB_OUTPUT
 docker pull "$UPSTREAM"
 UPSTREAM_VER="$(docker inspect "$UPSTREAM" | jq -r '.[0].Config.Labels["org.opencontainers.image.version"]')"
 echo "upstream_ver=$UPSTREAM_VER" >> $GITHUB_OUTPUT
+echo "ext_suffix=$EXT_SUFFIX" >> $GITHUB_OUTPUT

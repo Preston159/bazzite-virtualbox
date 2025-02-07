@@ -66,5 +66,11 @@ fi
 # extension pack URL
 EXTPACK_URL="$VIRTUALBOX_VER_URL/Oracle_VirtualBox_Extension_Pack-$VIRTUALBOX_VER.vbox-extpack"
 # download and install extension pack
-curl -L -o "/tmp/extpack.vbox-extpack" "$EXTPACK_URL"
-yes | KERN_VER="$KERNEL_VER" vboxmanage extpack install "/tmp/extpack.vbox-extpack"
+EXTPACK_PATH="/tmp/extpack.vbox-extpack"
+curl -L -o $EXTPACK_PATH "$EXTPACK_URL"
+/usr/lib/virtualbox/VBoxExtPackHelperApp install \
+  --base-dir /usr/lib/virtualbox/ExtensionPacks \
+  --cert-dir /usr/share/virtualbox/ExtPackCertificates \
+  --name "Oracle VirtualBox Extension Pack" \
+  --tarball $EXTPACK_PATH \
+  --sha-256 "$(sha256sum $EXTPACK_PATH | cut -d' ' -f1)"
