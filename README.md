@@ -1,5 +1,7 @@
 # bazzite-virtualbox
 
+[![build-bazzite-virtualbox](https://github.com/Preston159/bazzite-virtualbox/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Preston159/bazzite-virtualbox/actions/workflows/build.yml)
+
 Universal Blue's [bazzite] with VirtualBox, its kernel drivers, and the
 Extension Pack preinstalled.
 
