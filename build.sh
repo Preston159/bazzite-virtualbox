@@ -6,7 +6,7 @@ set -ouex pipefail
 RELEASE="$(rpm -E %fedora)"
 
 # search installed rpm packages for kernel to get version; `uname -r` does not work in a container environment
-KERNEL_VER="$(/usr/libexec/rpm-ostree/wrapped/rpm -qa | grep -E 'kernel-[0-9].*?\.bazzite' | cut -d'-' -f2,3)"
+KERNEL_VER="$(rpm -qa | grep -E 'kernel-[0-9].*?\.bazzite' | cut -d'-' -f2,3)"
 # get just the version number from the kernel version
 KERNEL_RELEASE_VER="$(echo $KERNEL_VER | cut -d'.' -f1,2,3)"
 # .rpm name for kernel-devel
