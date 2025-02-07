@@ -7,18 +7,8 @@ RELEASE="$(rpm -E %fedora)"
 
 # search installed rpm packages for kernel to get version; `uname -r` does not work in a container environment
 KERNEL_VER="$(rpm -qa | grep -E 'kernel-[0-9].*?\.bazzite' | cut -d'-' -f2,3)"
-# get just the version number from the kernel version
-KERNEL_RELEASE_VER="$(echo $KERNEL_VER | cut -d'.' -f1,2,3)"
-# .rpm name for kernel-devel
-KERNEL_DEVEL_RPM="kernel-devel-$KERNEL_VER.rpm"
-# .rpm name for kernel-devel-matched
-KERNEL_DEVEL_MATCHED_RPM="kernel-devel-matched-$KERNEL_VER.rpm"
-# download kernel-devel rpm from hhd-dev/kernel-bazzite
-curl -L -o "/tmp/$KERNEL_DEVEL_RPM" "https://github.com/hhd-dev/kernel-bazzite/releases/download/$KERNEL_RELEASE_VER/$KERNEL_DEVEL_RPM"
-# download kernel-devel-matched rpm from hhd-dev/kernel-bazzite
-curl -L -o "/tmp/$KERNEL_DEVEL_MATCHED_RPM" "https://github.com/hhd-dev/kernel-bazzite/releases/download/$KERNEL_RELEASE_VER/$KERNEL_DEVEL_MATCHED_RPM"
-# install kernel-devel, kernel-devel-matched, and dkms
-rpm-ostree install "/tmp/$KERNEL_DEVEL_RPM" "/tmp/$KERNEL_DEVEL_MATCHED_RPM" dkms
+# install dkms
+rpm-ostree install dkms
 # get latest version number of VirtualBox
 VIRTUALBOX_VER="$(curl -L https://download.virtualbox.org/virtualbox/LATEST.TXT)"
 # URL to list of VirtualBox packages for latest version
