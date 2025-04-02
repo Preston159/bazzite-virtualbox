@@ -8,7 +8,7 @@ RELEASE="$(rpm -E %fedora)"
 # search installed rpm packages for kernel to get version; `uname -r` does not work in a container environment
 KERNEL_VER="$(rpm -qa | grep -E 'kernel-[0-9].*?\.bazzite' | cut -d'-' -f2,3)"
 # install dkms
-rpm-ostree install dkms
+dnf install -y dkms
 # get latest version number of VirtualBox
 VIRTUALBOX_VER="$(curl -L https://download.virtualbox.org/virtualbox/LATEST.TXT)"
 # URL to list of VirtualBox packages for latest version
@@ -30,7 +30,7 @@ echo "Using '$VIRTUALBOX_RPM_URL' for Fedora $RELEASE"
 # download VirtualBox rpm
 curl -L -o "/tmp/$VIRTUALBOX_RPM" "https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VER/$VIRTUALBOX_RPM"
 # install VirtualBox
-rpm-ostree install "/tmp/$VIRTUALBOX_RPM"
+dnf install -y "/tmp/$VIRTUALBOX_RPM"
 # Insert hardcoded kernel version in VirtualBox scripts where necessary to get
 # kernel modules to build. Without doing this, VirtualBox attempts to build the
 # kernel modules for the kernel the GitHub runner host is running on.
