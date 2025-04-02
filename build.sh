@@ -53,8 +53,14 @@ KERN_VER="$KERNEL_VER" /sbin/vboxconfig
 if [[ -e /var/log/vbox-setup.log ]]; then
   cat /var/log/vbox-setup.log
 fi
+# extension pack file name
+EXTPACK_NAME="Oracle_VirtualBox_Extension_Pack-$VIRTUALBOX_VER.vbox-extpack"
+# sha256 sums URL
+SUMS_URL="${VIRTUALBOX_VER_URL}SHA256SUMS"
+# sha256 for extpack file
+HASH="$(curl -L $SUMS_URL | grep $EXTPACK_NAME | cut -d' ' -f1)"
 # extension pack URL
-EXTPACK_URL="${VIRTUALBOX_VER_URL}Oracle_VirtualBox_Extension_Pack-$VIRTUALBOX_VER.vbox-extpack"
+EXTPACK_URL="${VIRTUALBOX_VER_URL}${EXTPACK_NAME}"
 # download and install extension pack
 EXTPACK_PATH="/tmp/extpack.vbox-extpack"
 curl -L -o $EXTPACK_PATH "$EXTPACK_URL"
@@ -63,4 +69,4 @@ curl -L -o $EXTPACK_PATH "$EXTPACK_URL"
   --cert-dir /usr/share/virtualbox/ExtPackCertificates \
   --name "Oracle VirtualBox Extension Pack" \
   --tarball $EXTPACK_PATH \
-  --sha-256 "$(sha256sum $EXTPACK_PATH | cut -d' ' -f1)"
+  --sha-256 $HASH
