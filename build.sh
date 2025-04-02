@@ -54,7 +54,7 @@ if [[ -e /var/log/vbox-setup.log ]]; then
   cat /var/log/vbox-setup.log
 fi
 # extension pack URL
-EXTPACK_URL="$VIRTUALBOX_VER_URL/Oracle_VirtualBox_Extension_Pack-$VIRTUALBOX_VER.vbox-extpack"
+EXTPACK_URL="${VIRTUALBOX_VER_URL}Oracle_VirtualBox_Extension_Pack-$VIRTUALBOX_VER.vbox-extpack"
 # download and install extension pack
 EXTPACK_PATH="/tmp/extpack.vbox-extpack"
 curl -L -o $EXTPACK_PATH "$EXTPACK_URL"
