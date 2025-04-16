@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flavor: [base, nvidia, gnome, gnome-nvidia, deck, deck-gnome, ally, ally-gnome, asus, gnome-asus, asus-nvidia, gnome-asus-nvidia]
+        flavor: [base, nvidia, gnome, gnome-nvidia, deck, deck-gnome, ally, ally-gnome, asus, gnome-asus, asus-nvidia, gnome-asus-nvidia, nvidia-closed, gnome-nvidia-closed, asus-nvidia-closed, gnome-asus-nvidia-closed]
 
     permissions:
       contents: read

@@ -5,6 +5,8 @@ set -ouex pipefail
 case "$flavor" in
   "base")
     SUFFIX="";;
+  *nvidia-closed)
+    SUFFIX="-${flavor/-closed/}";;
   *nvidia)
     SUFFIX="-$flavor-open";;
   *)

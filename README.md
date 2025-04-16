@@ -17,9 +17,7 @@ have installed (e.g. `bazzite-xyz` -> `bazzite-virtualbox-xyz`), with a few
 exceptions:
 - `bazzite` -> `bazzite-virtualbox-base`
 - `bazzite-xyz-nvidia-open` -> `bazzite-virtualbox-xyz-nvidia` (remove the `-open`)
-  - The non-`open` nvidia versions of bazzite are not currently built in this
-    repository. If they are added in the future, a different suffix will be
-    used such that `xyz-nvidia` versions are still based on `xyz-nvidia-open`.
+- `bazzite-xyz-nvidia` -> `bazzite-virtualbox-xyz-nvidia-closed`
 
 You can check which version of bazzite you currently have installed by running:
 ```bash
