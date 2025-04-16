@@ -7,7 +7,17 @@ Extension Pack preinstalled.
 
 ## Installing
 
-To install, first install [bazzite], then run:
+To install, first install [bazzite], then download and run `install.sh` from
+this repository:
+
+```bash
+curl -L -o install.sh https://raw.githubusercontent.com/Preston159/bazzite-virtualbox/refs/heads/main/install.sh
+chmod +x install.sh
+./install.sh
+```
+
+Or to rebase manually:
+
 ```bash
 rpm-ostree rebase ostree-image-signed:docker://ghcr.io/preston159/bazzite-virtualbox-[flavor]
 ```
